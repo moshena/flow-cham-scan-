@@ -1,0 +1,95 @@
+{
+  "board": {
+    "size": {
+      "height": 1100,
+      "width": 1000
+    },
+    "objectList": {
+      "rectangle": [
+        {
+          "id": 0,
+          "size": {
+            "height": 227,
+            "width": 286
+          },
+          "position": {
+            "left": 371,
+            "top": 78
+          }
+        },
+        {
+          "id": 1,
+          "size": {
+            "height": 196,
+            "width": 273
+          },
+          "position": {
+            "left": 376,
+            "top": 343
+          }
+        },
+        {
+          "id": 2,
+          "size": {
+            "height": 201,
+            "width": 265
+          },
+          "position": {
+            "left": 19,
+            "top": 826
+          }
+        },
+        {
+          "id": 4,
+          "size": {
+            "height": 201,
+            "width": 265
+          },
+          "position": {
+            "left": 600,
+            "top": 826
+          }
+        }
+      ],
+      "rhombus": [{
+        "id": 3,
+        "size": {
+          "height": 226,
+          "width": 287
+        },
+        "position": {
+          "left": 350,
+          "top": 593
+        }
+      }]
+    },
+    "connectorsList": {
+      "connector": [
+        {
+          "endID": 1,
+          "endSide": 0,
+          "startID": 0,
+          "startSide": 2
+        },
+        {
+          "endID": 3,
+          "endSide": 0,
+          "startID": 1,
+          "startSide": 2
+        },
+        {
+          "endID": 2,
+          "endSide": 0,
+          "startID": 3,
+          "startSide": 3
+        },
+        {
+          "endID": 4,
+          "endSide": 0,
+          "startID": 3,
+          "startSide": 1
+        }
+      ]
+    }
+  }
+}
