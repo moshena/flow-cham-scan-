@@ -1,4 +1,4 @@
-class classifier:
+class filter:
 
 
     image = None
@@ -14,6 +14,6 @@ class classifier:
     def ImageConvertor(self):#here we will filter te image
         pass
 
-    def copyImage(self):#copy the image to get ful control
+    def saveImage(self):#copy the image to get ful control
         pass
 
