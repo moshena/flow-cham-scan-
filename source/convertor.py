@@ -1,6 +1,8 @@
 import objects as obj
 import json as json
 import os
+import HEADER
+
 
 from pprint import pprint
 
@@ -45,9 +47,13 @@ class convertor:
     _file = None
 
     def __init__(self,objList):
-        self_objList = None
-        self.create_json_file()
-        self.print_to_file()
+        pass
+        #self_objList = None
+        #self.create_json_file()
+        #self.print_to_file()
+
+    def startProcess(self):# this funcation will manage the others one and return status to the caller
+        return HEADER.unimplement
 
     def create_json_file(self):
         self._file = open("../tests_files/output_Json_Tests/tal.json", "wb")

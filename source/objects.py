@@ -1,4 +1,5 @@
 import json
+import copy
 
 CONST_NUM_OF_SHAPE = 4 # 1. circle 2. rectangle 3. rhombus 4. square
 CONST_NUM_OF_VECTORS_TYPE =3 # 1. vector type0 2. vector type 1 3. vector type 2
@@ -153,7 +154,7 @@ class Position:#struct
 class Objects:#abstract class
 
     def printme(self):
-      print "abstract Object"
+      print ("abstract Object")
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
@@ -174,7 +175,7 @@ class Connector(Objects):
         self._startSide = startSide
 
     def printme(self):
-      print"Connector Object"
+      print ("Connector Object")
 
 
 class Connector1(Objects):
@@ -191,7 +192,7 @@ class Connector1(Objects):
         self._startSide = startSide
 
     def printme(self):
-      print"Vector Object"
+      print("Vector Object")
 
 
 class Connector2(Objects):
@@ -208,7 +209,7 @@ class Connector2(Objects):
         self._startSide = startSide
 
     def printme(self):
-      print"Vector Object"
+      print("Vector Object")
 
 
 class Rectangle(Objects):
@@ -222,7 +223,7 @@ class Rectangle(Objects):
         self._position = Position(posL,posT)
 
     def printme(self):
-        print "Rectangle Object"
+        print( "Rectangle Object")
 
 
 class Circle(Objects):
@@ -236,7 +237,7 @@ class Circle(Objects):
         self._position = Position(posL,posT)
 
     def printme(self):
-        print "Circle Object"
+        print( "Circle Object")
 
 
 class Rhombus(Objects):
@@ -250,7 +251,7 @@ class Rhombus(Objects):
         self._position = Position(posL,posT)
 
     def printme(self):
-        print "Rhombus Object"
+        print ("Rhombus Object")
 
 
 class Square(Objects):
@@ -264,8 +265,33 @@ class Square(Objects):
         self._position = Position(posL,posT)
 
     def printme(self):
-        print "Square"
+        print ("Square")
 
+class mainData():
+    PARAMSlength = None
+    PARAMSlist = None
+    HEADERreturn = None
+    image = None
+
+
+    def __init__(self, length, list):
+        self.PARAMSlength= length
+        self.PARAMSlist= list
+
+    def setImage(self):
+        self.image = copy.copy(self.PARAMSlist[1])
+
+    def setHeader(self,header):
+        self.image = header
+
+
+class HEADER():
+    status = None
+    headerString = None
+
+    def __init__(self, statuscode,headerString):
+        self.status = statuscode
+        self.headerString = headerString
 
 
 # expation unitests

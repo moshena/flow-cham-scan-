@@ -1,6 +1,7 @@
 import numpy as np
-import cv2
 from matplotlib import pyplot as plt
+import HEADER
+
 
 
 class classifier:
@@ -11,7 +12,7 @@ class classifier:
         self.image = image
 
     def startProcess(self):# this funcation will manage the others one and return status to the caller
-        pass
+        return HEADER.unimplement
 
     def imageVerifier(self):# here we will check the image
         pass
