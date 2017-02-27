@@ -14,6 +14,7 @@ def printError(str):
 def checkHEADER(HEADER):
     #if(HEADER.status<100):# under debug
     if True:
+        print(HEADER.headerString)
         return 1
     else:
         return printError("Image path should be pass")
@@ -27,6 +28,7 @@ def main():
 
     if (data.PARAMSlength < 2):
         printError("Image path should be pass")
+        exit(-1)
 
     data.setImage()
 
@@ -40,21 +42,21 @@ def main():
     #start process
 
 
-    HEADER =filterObj.startFiler()
-    if(checkHEADER(HEADER) ==-1):
-        printError("UnkmownError")
+    head =filterObj.startFiler()
+    if(checkHEADER(head) ==-1):
+        printError("UnknownError")
 
-    HEADER =classifierObj.startProcess()
-    if(checkHEADER(HEADER) ==-1):
-        printError("UnkmownError")
+    head =classifierObj.startProcess()
+    if(checkHEADER(head) ==-1):
+        printError("UnknownError")
 
-    HEADER =flowChartObj.startProcess()
-    if(checkHEADER(HEADER) ==-1):
-        printError("UnkmownError")
+    head =flowChartObj.startProcess()
+    if(checkHEADER(head) ==-1):
+        printError("UnknownError")
 
-    HEADER =convertorObj.startProcess()
-    if(checkHEADER(HEADER) ==-1):
-        printError("UnkmownError")
+    head =convertorObj.startProcess()
+    if(checkHEADER(head) ==-1):
+        printError("UnknownError")
 
     print("Complete")
 

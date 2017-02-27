@@ -1,4 +1,6 @@
+import objects
 import HEADER
+
 
 class filter:
 
@@ -8,7 +10,7 @@ class filter:
         self.image = image
 
     def startFiler(self):# this funcation will manage the others one and return status to the caller
-        pass
+        return HEADER.unimplement
 
     def validation(self):# here we will check the image format, size,acsess
         pass
