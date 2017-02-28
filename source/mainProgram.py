@@ -1,3 +1,4 @@
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~main~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import sys
 import objects
 import filter
