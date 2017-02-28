@@ -16,6 +16,5 @@ for x in range(100):
     img.save(basicname +str(i)+'.png')
     file.write('mspaint '+ basicname +str(i)+'.png\n')
 
-print("moshe")
 file.close()
 os.startfile('RunPaint.bat')
