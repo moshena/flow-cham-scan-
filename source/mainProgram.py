@@ -1,4 +1,3 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~main~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import sys
 import objects
 import filter
@@ -35,19 +34,19 @@ def main():
 
     # init objects
 
-    filterObj = filter.filter("some params")
-    classifierObj = classifier.classifier("some params")
+    filterObj = filter.filter(data)
+    classifierObj = classifier.classifier()
     flowChartObj = flowChart.flowChart("some params")
     convertorObj =  convertor.convertor("some params")
 
     #start process
 
 
-    head =filterObj.startFiler()
+    head =filterObj.startFiler(data)
     if(checkHEADER(head) ==-1):
         printError("UnknownError")
 
-    head =classifierObj.startProcess()
+    head =classifierObj.startProcess(data)
     if(checkHEADER(head) ==-1):
         printError("UnknownError")
 

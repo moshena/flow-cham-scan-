@@ -1,5 +1,6 @@
 import json
 import copy
+from PIL import Image
 
 CONST_NUM_OF_SHAPE = 4 # 1. circle 2. rectangle 3. rhombus 4. square
 CONST_NUM_OF_VECTORS_TYPE =3 # 1. vector type0 2. vector type 1 3. vector type 2
@@ -272,14 +273,17 @@ class mainData():
     PARAMSlist = None
     HEADERreturn = None
     image = None
+    filteredImg = None
 
 
     def __init__(self, length, list):
         self.PARAMSlength= length
         self.PARAMSlist= list
 
+
     def setImage(self):
-        self.image = copy.copy(self.PARAMSlist[1])
+        self.image = Image.open(self.PARAMSlist[1])
+        self.image = self.image.convert('L')
 
     def setHeader(self,header):
         self.image = header
