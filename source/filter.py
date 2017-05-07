@@ -8,6 +8,8 @@ from scipy import ndimage
 
 
 
+
+
 class filter:
 
 
@@ -15,11 +17,12 @@ class filter:
     def __init__(self,data):
 
         self.image = data.image
+        self.data = data
 
     def startFiler(self,data):# this funcation will manage the others one and return status to the caller
         opencvIMAGE = self.medainFirst()
-        opencvIMAGE2 = self.fillImage(opencvIMAGE)
-        data.filteredImg = opencvIMAGE2
+        self.fillImage(opencvIMAGE)
+        #data.filteredImg = opencvIMAGE
         return HEADER.unimplement
 
     def validation(self):# here we will check the image format, size,acsess
@@ -35,17 +38,10 @@ class filter:
         col = self.image
         gray = col.convert('L')
         bw = np.asarray(gray).copy()
+        self.data.bwImage = bw
 
-        im_med = ndimage.median_filter(bw, 25)
 
-        new_im = np.abs(bw - im_med)
-
-        new_im[new_im < 90] = 255
-        new_im[new_im > 230] = 255
-
-        mask = ((new_im < 230) & (new_im > 90))
-
-        new_im[mask] = 0
+        # Median
 
         im_med = ndimage.median_filter(bw, 25)
 
@@ -59,10 +55,12 @@ class filter:
         new_im[mask] = 0
 
         imfile = Image.fromarray(new_im)
-        x=5
-        imfile.save("result_bw2" + str(x) + ".png")
-        x=5
-        img = cv2.imread("result_bw2" + str(x) + ".png", 1)
+        new_im = bw
+        self.data.bwImage = new_im
+        imfile.save("result_bw2.png")
+        img = cv2.imread("result_bw2.png", 1)
+
+        # Average
         kernel = np.ones((10, 10), np.float32) / 100
         dst = cv2.filter2D(img, -1, kernel)
 
@@ -73,9 +71,7 @@ class filter:
         return dst#openCV image
 
 
-    def fillImage(self,image):
-        x=5
-        im_in = cv2.imread('average.png', cv2.IMREAD_GRAYSCALE);
+    def fillImage(self,im_in):
         th, im_th = cv2.threshold(im_in, 220, 255, cv2.THRESH_BINARY_INV);
 
         im_floodfill = im_th.copy()
@@ -89,15 +85,14 @@ class filter:
 
         im_out = im_th | im_floodfill_inv
 
-        cv2.imwrite(str(x) + "result.png", im_th)
-        cv2.imwrite(str(x) + "result2.png", im_floodfill)
-        cv2.imwrite(str(x) + "result3.png", im_floodfill_inv)
-        cv2.imwrite(str(x) + "result4.png", im_out)
+        cv2.imwrite("result.png", im_th)
+        cv2.imwrite("result2.png", im_floodfill)
+        cv2.imwrite("result3.png", im_floodfill_inv)
 
-        bw = np.asarray(im_out).copy()
-        import scipy.misc
-        scipy.misc.imsave('a' + str(x) + '.jpg', bw)
-        print(str(x))
+        im_out =cv2.cvtColor(im_out, cv2.COLOR_BGR2GRAY)
+        im_out[im_out<240] = 0
+        cv2.imwrite("resultaaa4.png", im_out)
+        self.data.filteredImg = im_out
 
         return im_out
 
