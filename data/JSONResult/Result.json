@@ -1,0 +1,105 @@
+{
+    "board": {
+        "_size": {
+            "_height": 1600,
+            "_width": 1200
+        }
+    },
+    "connectorsList": {
+        "connector": [
+            {
+                "_endID": [
+                    0,
+                    1
+                ],
+                "_endSide": [
+                    0,
+                    1
+                ],
+                "_startID": [],
+                "_startSide": []
+            },
+            {
+                "_endID": [
+                    1,
+                    2
+                ],
+                "_endSide": [
+                    2,
+                    0
+                ],
+                "_startID": [],
+                "_startSide": []
+            },
+            {
+                "_endID": [
+                    1,
+                    3
+                ],
+                "_endSide": [
+                    1,
+                    0
+                ],
+                "_startID": [],
+                "_startSide": []
+            }
+        ]
+    },
+    "objectsList": {
+        "circle": [
+            {
+                "_id": 2,
+                "_position": {
+                    "_left": 56,
+                    "_top": 536
+                },
+                "_size": {
+                    "_height": 208,
+                    "_width": 203
+                },
+                "_text": "1 "
+            }
+        ],
+        "rectangle": [],
+        "rhombus": [
+            {
+                "_id": 1,
+                "_position": {
+                    "_left": 301,
+                    "_top": 494
+                },
+                "_size": {
+                    "_height": 216,
+                    "_width": 221
+                },
+                "_text": "2"
+            }
+        ],
+        "square": [
+            {
+                "_id": 0,
+                "_position": {
+                    "_left": 505,
+                    "_top": 200
+                },
+                "_size": {
+                    "_height": 270,
+                    "_width": 198
+                },
+                "_text": "9"
+            },
+            {
+                "_id": 3,
+                "_position": {
+                    "_left": 512,
+                    "_top": 747
+                },
+                "_size": {
+                    "_height": 234,
+                    "_width": 209
+                },
+                "_text": "3"
+            }
+        ]
+    }
+}

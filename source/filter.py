@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 from scipy import ndimage
+from datetime import datetime
 
 
 
@@ -21,20 +22,12 @@ class filter:
 
     def startFiler(self,data):# this funcation will manage the others one and return status to the caller
         opencvIMAGE = self.medainFirst()
-        self.fillImage(opencvIMAGE)
+        #self.fillImage(opencvIMAGE)
         #data.filteredImg = opencvIMAGE
-        return HEADER.unimplement
-
-    def validation(self):# here we will check the image format, size,acsess
-        pass
-
-    def ImageConvertor(self):#here we will filter te image
-        pass
-
-    def saveImage(self):#copy the image to get ful control
-        pass
+        return HEADER.success
 
     def medainFirst(self):
+        now1 = datetime.now()
         col = self.image
         gray = col.convert('L')
         bw = np.asarray(gray).copy()
@@ -42,36 +35,67 @@ class filter:
 
 
         # Median
+        """
+        to clean the image from big noise like shadow
+        Medain cut the noise
+        """
+        WINDOWS_MEDIAN_SIZE = 5
+        im_med_noise = ndimage.median_filter(bw,WINDOWS_MEDIAN_SIZE*WINDOWS_MEDIAN_SIZE) # only nosie
 
-        im_med = ndimage.median_filter(bw, 25)
+        im_clean = np.abs(bw - im_med_noise)
 
-        new_im = np.abs(bw - im_med)
 
-        new_im[new_im < 90] = 255
-        new_im[new_im > 230] = 255
+        """
+        make BW image
+        """
+        im_clean[im_clean < 90] = 255
+        im_clean[im_clean > 230] = 255
 
-        mask = ((new_im < 230) & (new_im > 90))
+        mask = ((im_clean < 230) & (im_clean > 90))
 
-        new_im[mask] = 0
+        im_clean[mask] = 0
 
-        imfile = Image.fromarray(new_im)
-        new_im = bw
-        self.data.bwImage = new_im
-        imfile.save("result_bw2.png")
-        img = cv2.imread("result_bw2.png", 1)
+        imfile = Image.fromarray(im_clean)
+        self.data.bwImage = im_clean
+        imfile.save("trash/result_bw2.png")
+        img = cv2.imread("trash/result_bw2.png", 1)
 
         # Average
-        kernel = np.ones((10, 10), np.float32) / 100
-        dst = cv2.filter2D(img, -1, kernel)
+        """
+        to complete lines that the user didn`t fill we doing average to smear the lines
+        Note: this operation smear all the image so it is not usfeull for word rec
+        """
+        WINDOWS_AVERGAE_SIZE = 6
+        denominator = WINDOWS_AVERGAE_SIZE*WINDOWS_AVERGAE_SIZE
+        kernel = np.ones((WINDOWS_AVERGAE_SIZE, WINDOWS_AVERGAE_SIZE), np.float32) / denominator
+        imageAfterAve = cv2.filter2D(img, -1, kernel)
 
-        dst[dst < 240] = 0
-        dst[dst > 180] = 255
+        cv2.imwrite('trash/NEW2.png', imageAfterAve)
 
-        cv2.imwrite('average.png', dst)
-        return dst#openCV image
+        # strenghten the BLACK color "real data" and replacements the BLACK to be White and the WHITE to be black
 
+        imageAfterAve[imageAfterAve < 240] = 0
+        imageAfterAve[imageAfterAve > 180] = 255
+
+        imageAfterAve[imageAfterAve == 255] = 200
+        imageAfterAve[imageAfterAve == 0 ] = 255
+        imageAfterAve[imageAfterAve == 200] = 0
+        now2 = datetime.now()
+
+        print(now2-now1)
+        self.data.filteredImg = imageAfterAve# save the average inmage on local storage
+        cv2.imwrite('trash/average.png', imageAfterAve)
+
+
+        return imageAfterAve#openCV image
 
     def fillImage(self,im_in):
+        """
+
+        :param im_in:  im_in image to fill with colse shapes
+        :return: openCV format image with full images
+        """
+
         th, im_th = cv2.threshold(im_in, 220, 255, cv2.THRESH_BINARY_INV);
 
         im_floodfill = im_th.copy()
@@ -85,13 +109,7 @@ class filter:
 
         im_out = im_th | im_floodfill_inv
 
-        cv2.imwrite("result.png", im_th)
-        cv2.imwrite("result2.png", im_floodfill)
-        cv2.imwrite("result3.png", im_floodfill_inv)
-
-        im_out =cv2.cvtColor(im_out, cv2.COLOR_BGR2GRAY)
-        im_out[im_out<240] = 0
-        cv2.imwrite("resultaaa4.png", im_out)
+        self.data.filteredImg2 =np.copy(im_out)
         self.data.filteredImg = im_out
 
         return im_out

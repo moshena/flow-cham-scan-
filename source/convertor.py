@@ -1,10 +1,6 @@
-import objects as obj
-import json as json
-import os
+import objects
 import HEADER
 
-
-from pprint import pprint
 
 
 CONST_BOARD_HEIGHT_SIZE = 1100
@@ -20,7 +16,6 @@ CONS_START_STRING = """{
 CONST_END_STRING = """    }
   }
 }
-
 """
 
 CONST_RECTANGLE_STRING = """ "rectangle": ["""
@@ -38,39 +33,44 @@ CONST_CONNECTOR_2_STRING = """ "connector2": [ """
 
 CONST_END_BRACKETS_STRING = """ ]"""
 
+JSONFolderPath = "../data/JSONResult/"
+
+
 
 
 #unfinish code!
 class convertor:
 
     _objList = None
+    _data = None
     _file = None
 
-    def __init__(self,objList):
-        pass
+    def __init__(self,data):
+         self._data = data
         #self_objList = None
-        #self.create_json_file()
         #self.print_to_file()
 
-    def startProcess(self):# this funcation will manage the others one and return status to the caller
-        return HEADER.unimplement
+    def startProcess(self,data):# this funcation will manage the others one and return status to the caller
+        self.create_json_file()
+        self.Test(data)
+        return HEADER.success
 
     def create_json_file(self):
-        self._file = open("../tests_files/output_Json_Tests/tal.json", "wb")
+        self._file = open(JSONFolderPath+"Result.json", "w")
 
     def print_to_file(self):
-        file.write(self._file,CONS_START_STRING )
+        file.write(self._file,CONS_START_STRING)
         file.write(self._file,CONST_END_STRING)
 
 
         count = 0
         for list in self._objList: #if we will not seccess to represent list like json we will implement this unfinish function
             if count == 0:
-                file.write(self._file, CONST_RECTANGLE_STRING )
+                file.write(self._file, CONST_RECTANGLE_STRING)
             elif count == 1:
                 file.write(self._file, CONST_CIRCLE_STRING)
             elif count == 2:
-                file.write(self._file, CONST_RHOMBUS_STRING )
+                file.write(self._file, CONST_RHOMBUS_STRING)
             elif count == 3:
                 file.write(self._file, CONST_SQUARE_STRING)
             elif count == 4:
@@ -91,10 +91,12 @@ class convertor:
             if count == 6:
                 file.write(self._file, CONST_END_STRING)
 
+    def Test(self,data):
 
-
-
-
+        h = data.Hboard
+        w = data.Wboard
+        flowChart = objects.objects(h,w,data.objList,data.concList)
+        self._file.write(flowChart.toJSON())
 
 
 

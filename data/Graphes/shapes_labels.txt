@@ -1,0 +1,6 @@
+void
+gar
+rec
+rho
+square
+circle

@@ -46,28 +46,18 @@ class ObjectsList():
         return json.dumps(self, default=lambda o: o.__dict__,
                         sort_keys=True, indent=4)
 
-
 class ConnectorsList():
 
         connector = None
-        connector2 = None
-        connector3 = None
+
 
         def __init__(self, *args):
             self.connector = []
-            self.connector2 = []
-            self.connector3 = []
 
 
         def add_con(self,c , type):#c is the connector object and type related to kind of the connector
             if(type ==CONS_CON_NUM):
                 self.connector.append(c)
-            elif(type ==CONS_CON1_NUM):
-                self.connector1.append(c)
-            elif(type==CONS_CON2_NUM):
-                self.connector2.append(c)
-            else: # throw Exaption
-                pass
 
         def toJSON(self):
             return json.dumps(self, default=lambda o: o.__dict__,
@@ -82,11 +72,10 @@ class objects:#struct list to save all flow chart objects
     connectorsList = None
 
 
-    def __init__(self):
-        self.board = Board(1100,1000)#1. vector type0 2. vector type 1 3. vector type 2
-        self.objectsList = ObjectsList() # 1. circle 2. rectangle 3. rhombus 4. square
-        self.connectorsList = ConnectorsList()
-
+    def __init__(self,boardH,boardW,objList,concList):
+        self.board = Board(boardH,boardW)#1. vector type0 2. vector type 1 3. vector type 2
+        self.objectsList = objList # 1. circle 2. rectangle 3. rhombus 4. square
+        self.connectorsList = concList
 
     def toJSON(self):
          return json.dumps(self, default=lambda o: o.__dict__,
@@ -104,7 +93,6 @@ class objects:#struct list to save all flow chart objects
     def add_rho(self, shape):
         self.objectsList.add_shape(shape,CONS_RHO_NUM)
 
-
     def add_con(self,shape):
         self.objectsList.add_con(shape,CONS_CON_NUM)
 
@@ -113,8 +101,6 @@ class objects:#struct list to save all flow chart objects
 
     def add_con2(self, shape):
         self.connectorsList.add_con(shape,CONS_CON2_NUM)
-
-
 
 class Board:#struct
     _size =None
@@ -125,7 +111,6 @@ class Board:#struct
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                         sort_keys=True, indent=4)
-
 
 class Size:#struct
     _height =None
@@ -139,7 +124,6 @@ class Size:#struct
         return json.dumps(self, default=lambda o: o.__dict__,
                         sort_keys=True, indent=4)
 
-
 class Position:#struct
     _left = None
     _top = None
@@ -151,7 +135,6 @@ class Position:#struct
         return json.dumps(self, default=lambda o: o.__dict__,
                         sort_keys=True, indent=4)
 
-
 class Objects:#abstract class
 
     def printme(self):
@@ -161,112 +144,105 @@ class Objects:#abstract class
         return json.dumps(self, default=lambda o: o.__dict__,
                         sort_keys=True, indent=4)
 
-
 class Connector(Objects):
+    #Connector is actually Vector
+    _endIDs = None#list of objects IDs that connect to the connector with arrow
+    _endSides = None #list that related to "_endIDs" list. the list contain the side per id`s(respectively)
+    _startIDs = None#list of objects IDs that connect to the connector without arrow
+    _startSides = None#list that related to "_startIDs" list. the list contain the side per id`s(respectively)
 
-    _endID = None
-    _endSide = None
-    _startID = None
-    _startSide = None
-
-    def __init__(self,endID,endSide,startID,startSide):
-        self._endID = endID
-        self._endSide = endSide
-        self._startID = startID
-        self._startSide = startSide
+    def __init__(self,endIDs,endSides,startIDs,startSides):
+        self._endID = endIDs
+        self._endSide = endSides
+        self._startID = startIDs
+        self._startSide = startSides
 
     def printme(self):
       print ("Connector Object")
-
-
-class Connector1(Objects):
-
-    _endID = None
-    _endSide = None
-    _startID = None
-    _startSide = None
-
-    def __init__(self,endID,endSide,startID,startSide):
-        self._endID = endID
-        self._endSide = endSide
-        self._startID = startID
-        self._startSide = startSide
-
-    def printme(self):
-      print("Vector Object")
-
-
-class Connector2(Objects):
-
-    _endID = None
-    _endSide = None
-    _startID = None
-    _startSide = None
-
-    def __init__(self,endID,endSide,startID,startSide):
-        self._endID = endID
-        self._endSide = endSide
-        self._startID = startID
-        self._startSide = startSide
-
-    def printme(self):
-      print("Vector Object")
-
 
 class Rectangle(Objects):
     _id = None
     _size = None
     _position = None
+    _text = None
 
     def __init__(self, id,sizeH,sizeW,posL,posT):
         self._id = id
         self._size = Size(sizeH,sizeW)
         self._position = Position(posL,posT)
 
+    def setText(self,txt):
+        self._text = txt
+
     def printme(self):
         print( "Rectangle Object")
-
 
 class Circle(Objects):
     _id = None
     _size = None
     _position = None
+    _text = None
 
     def __init__(self, id,sizeH,sizeW,posL,posT):
         self._id = id
         self._size = Size(sizeH,sizeW)
         self._position = Position(posL,posT)
 
+    def setText(self, txt):
+        self._text = txt
+
     def printme(self):
         print( "Circle Object")
-
 
 class Rhombus(Objects):
     _id = None
     _size = None
     _position = None
+    _text = None
 
     def __init__(self, id,sizeH,sizeW,posL,posT):
         self._id = id
         self._size = Size(sizeH,sizeW)
         self._position = Position(posL,posT)
 
+    def setText(self, txt):
+        self._text = txt
+
     def printme(self):
         print ("Rhombus Object")
-
 
 class Square(Objects):
     _id = None
     _size = None
     _position = None
+    _text = None
 
     def __init__(self, id,sizeH,sizeW,posL,posT):
         self._id = id
         self._size = Size(sizeH,sizeW)
         self._position = Position(posL,posT)
 
+    def setText(self, txt):
+        self._text = txt
+
     def printme(self):
         print ("Square")
+
+def get4PointsByObj(object):
+    h = object._size._height
+    w = object._size._width
+    x = object._position._left
+    y = object._position._top
+
+
+    list = []
+
+    list.append(Point(x,y))
+    list.append(Point(x+w,y))
+    list.append(Point(x+w,y+h))
+    list.append(Point(x,y+h))
+
+    return list
 
 class mainData():
     PARAMSlength = None
@@ -274,6 +250,13 @@ class mainData():
     HEADERreturn = None
     image = None
     filteredImg = None
+    filteredImg2 = None
+    bwImage = None
+
+    objList = None
+    concList = None
+    Hboard = None
+    WBoard = None
 
 
     def __init__(self, length, list):
@@ -288,7 +271,6 @@ class mainData():
     def setHeader(self,header):
         self.image = header
 
-
 class HEADER():
     status = None
     headerString = None
@@ -296,6 +278,42 @@ class HEADER():
     def __init__(self, statuscode,headerString):
         self.status = statuscode
         self.headerString = headerString
+
+class Point():
+    x = None
+    y = None
+
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+class charObj:#struct
+    _maxX = None
+    _maxY = None
+    _type = None
+    _charName = None
+    def __init__ (self, maxx , maxy ,minx,miny, type,charName):
+        self._maxX = maxx
+        self._minX = minx
+        self._minY = miny
+        self._maxY = maxy
+        self._type = type
+        self._charName = charName
+
+class objectLimits():#this object shpukd contain the limits of specipic shape
+    maxX = None
+    minX = None
+    maxY = None
+    minY = None
+    id = None
+
+    def __init__(self, maxX,minX,maxY,minY,id):
+        self.maxX = maxX
+        self.minX = minX
+        self.maxY = maxY
+        self.minY = minY
+        self.id = id
+
 
 
 # expation unitests

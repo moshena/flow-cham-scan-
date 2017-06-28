@@ -25,7 +25,6 @@ def checkHEADER(HEADER):
 def main():
     # parse command line options
     data = objects.mainData(len(sys.argv), sys.argv)
-
     if (data.PARAMSlength < 2):
         printError("Image path should be pass")
         exit(-1)
@@ -36,37 +35,30 @@ def main():
 
     filterObj = filter.filter(data)
     classifierObj = classifier.classifier()
-    flowChartObj = flowChart.flowChart("some params")
-    convertorObj =  convertor.convertor("some params")
+    flowChartObj = flowChart.flowChart("")
+    convertorObj = convertor.convertor("")
 
-    #start process
+    # start process
 
-
-    head =filterObj.startFiler(data)
-    if(checkHEADER(head) ==-1):
+    print("[log][status] start filter")
+    head = filterObj.startFiler(data)
+    if (checkHEADER(head) == -1):
         printError("UnknownError")
 
-    head =classifierObj.startProcess(data)
-    if(checkHEADER(head) ==-1):
+    print("[log][status] classifier")
+    head = classifierObj.startProcess(data)
+    if (checkHEADER(head) == -1):
         printError("UnknownError")
 
-    head =flowChartObj.startProcess()
-    if(checkHEADER(head) ==-1):
+    head = flowChartObj.startProcess()
+    if (checkHEADER(head) == -1):
         printError("UnknownError")
 
-    head =convertorObj.startProcess()
-    if(checkHEADER(head) ==-1):
+    head = convertorObj.startProcess(data)
+    if (checkHEADER(head) == -1):
         printError("UnknownError")
 
-    print("Complete")
-
-
-
-
-
-
-
-
+    print("[log][status] Complete")
 
 
 if __name__ == "__main__":
